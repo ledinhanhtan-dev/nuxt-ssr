@@ -3,9 +3,10 @@
     <article>
       <div
         class="post-thumbnail"
-        :style="{backgroundImage: 'url(' + thumbnail + ')'}"></div>
+        :style="{ backgroundImage: 'url(' + post.thumbnail + ')' }"
+      ></div>
       <div class="post-content">
-        <h1>{{ title }}</h1>
+        <h1>{{ post.title }}</h1>
         <p>{{ previewText }}</p>
       </div>
     </article>
@@ -16,35 +17,25 @@
 export default {
   name: 'PostPreview',
   props: {
-    id: {
-      type: String,
-      required: true
+    post: {
+      type: Object,
+      required: true,
     },
     isAdmin: {
       type: Boolean,
-      required: true
+      default: false,
     },
-    title: {
-      type: String,
-      required: true
-    },
-    previewText: {
-      type: String,
-      required: true
-    },
-    thumbnail: {
-      type: String,
-      required: true
-    }
   },
   computed: {
     postLink() {
-      return this.isAdmin ? '/admin/' + this.id : '/posts/' + this.id
-    }
-  }
+      return `/${this.isAdmin ? 'admin' : 'posts'}/${this.post.id}`
+    },
+    previewText() {
+      return this.post.content.substring(0, 40) + '...'
+    },
+  },
 }
 </script>
-
 
 <style scoped>
 .post-preview {

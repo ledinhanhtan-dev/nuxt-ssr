@@ -20,7 +20,8 @@
 </template>
 
 <script>
-import { fetchPosts } from '@/data/posts'
+import axios from 'axios'
+import { POSTS_API } from '@/constants/api'
 
 export default {
   data() {
@@ -36,7 +37,8 @@ export default {
   },
   async fetch() {
     try {
-      this.post = await fetchPosts(this.$route.params.id)
+      const res = await axios.get(`${POSTS_API}/${this.$route.params.id}.json`)
+      this.post = { ...res.data, updatedDate: new Date().getFullYear() }
     } catch (error) {
       this.$router.push('/error')
     }

@@ -8,21 +8,27 @@
 
 <script>
 import axios from 'axios'
-import AdminPostForm from "@/components/Admin/AdminPostForm";
+import { mapActions } from 'vuex'
+import AdminPostForm from '@/components/Admin/AdminPostForm'
 
 export default {
   layout: 'admin',
   components: {
-    AdminPostForm
+    AdminPostForm,
   },
   methods: {
+    ...mapActions(['addPost']),
     onSubmitted(postData) {
-      axios.post('https://nuxt-blog.firebaseio.com/posts.json', postData)
-        .then(result => console.log(result))
+      axios
+        .post(
+          'https://nuxt-ssr-0-default-rtdb.asia-southeast1.firebasedatabase.app/posts.json',
+          postData
+        )
+        .then(res => console.log(res.data))
         .catch(e => console.log(e))
-    }
-  }
-};
+    },
+  },
+}
 </script>
 
 <style scoped>
@@ -37,4 +43,3 @@ export default {
   }
 }
 </style>
-

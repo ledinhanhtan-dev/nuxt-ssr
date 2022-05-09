@@ -2,7 +2,7 @@
   <form @submit.prevent="onSave">
     <AppControlInput v-model="editedPost.author">Author Name</AppControlInput>
     <AppControlInput v-model="editedPost.title">Title</AppControlInput>
-    <AppControlInput v-model="editedPost.thumbnailLink">
+    <AppControlInput v-model="editedPost.thumbnail">
       Thumbnail Link
     </AppControlInput>
     <AppControlInput control-type="textarea" v-model="editedPost.content">
@@ -33,18 +33,16 @@ export default {
       editedPost: this.post || {
         author: '',
         title: '',
-        thumbnailLink: '',
+        thumbnail: '',
         content: '',
       },
     }
   },
   methods: {
     onSave() {
-      // Save the post
       this.$emit('submit', this.editedPost)
     },
     onCancel() {
-      // Navigate back
       this.$router.push('/admin')
     },
   },
