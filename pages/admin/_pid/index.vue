@@ -13,6 +13,7 @@ import { jsonClone } from '@/utils'
 
 export default {
   layout: 'admin',
+  middleware: 'auth',
   components: {
     AdminPostForm,
   },

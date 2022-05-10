@@ -7,10 +7,12 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import AdminPostForm from '@/components/admin/AdminPostForm'
 
 export default {
   layout: 'admin',
+  middleware: 'auth',
   components: {
     AdminPostForm,
   },

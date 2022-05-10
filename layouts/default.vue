@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import TheHeader from '@/components/navigation/TheHeader'
 import TheSidenav from '@/components/navigation/TheSidenav'
 
@@ -15,10 +16,17 @@ export default {
     TheHeader,
     TheSidenav,
   },
+  middleware: 'load-auth',
   data() {
     return {
       displaySidenav: false,
     }
+  },
+  methods: {
+    ...mapActions(['loadAuth']),
+  },
+  created() {
+    this.loadAuth()
   },
 }
 </script>

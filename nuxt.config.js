@@ -46,6 +46,7 @@ export default {
     postUrl:
       process.env.POST_URL ||
       'https://nuxt-ssr-0-default-rtdb.asia-southeast1.firebasedatabase.app/posts',
+    fbAPIkey: 'AIzaSyBM4plbSVXQO39fSH9iWPk7MMI-nA71__w',
   },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
