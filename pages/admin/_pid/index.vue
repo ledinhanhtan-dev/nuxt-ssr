@@ -8,9 +8,10 @@
 
 <script>
 import axios from 'axios'
-import { mapActions } from 'vuex'
+import { mapGetters, mapActions } from 'vuex'
 import { POSTS_API } from '@/constants/api'
-import AdminPostForm from '@/components/Admin/AdminPostForm'
+import AdminPostForm from '@/components/admin/AdminPostForm'
+import { jsonClone } from '@/utils'
 
 export default {
   layout: 'admin',
@@ -21,6 +22,10 @@ export default {
     return {
       loadedPost: {},
     }
+  },
+  created() {
+    jsonClone
+    this.loadedPost = jsonClone(this.getPostById(this.$route.params.pid))
   },
   async fetch() {
     try {
@@ -34,12 +39,13 @@ export default {
   methods: {
     ...mapActions(['editPost']),
     submitEditedPost(editedPost) {
-      axios
-        .put(`${POSTS_API}/${this.$route.params.pid}.json`, editedPost)
-        .then(res => this.editPost({ ...res.data, id: this.$route.params.pid }))
-        .catch(e => console.log(e))
-        .finally(() => this.$router.push('/admin'))
+      this.editPost({ ...editedPost, id: this.$route.params.pid }).finally(() =>
+        this.$router.push('/admin')
+      )
     },
+  },
+  computed: {
+    ...mapGetters(['loadedPosts', 'getPostById']),
   },
 }
 </script>

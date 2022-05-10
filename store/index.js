@@ -9,6 +9,9 @@ export const getters = {
   loadedPosts(state) {
     return state.posts
   },
+  getPostById: state => postId => {
+    return state.posts.find(post => post.id === postId)
+  },
 }
 
 export const mutations = {
@@ -45,10 +48,20 @@ export const actions = {
   setPosts(context, posts) {
     context.commit('setPosts', posts)
   },
-  addPost(context, newPost) {
-    context.commit('addPost', newPost)
+  addPost(context, postData) {
+    return axios
+      .post(`${POSTS_API}.json`, postData)
+      .then(res =>
+        context.commit('addPost', { ...postData, id: res.data.name })
+      )
+      .catch(e => console.log(e))
   },
   editPost(context, editedPost) {
-    context.commit('editPost', editedPost)
+    return axios
+      .put(`${POSTS_API}/${editedPost.id}.json`, editedPost)
+      .then(() =>
+        context.commit('editPost', { ...editedPost, id: editedPost.id })
+      )
+      .catch(e => console.log(e))
   },
 }

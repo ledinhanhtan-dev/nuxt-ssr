@@ -8,8 +8,7 @@
 
 <script>
 import axios from 'axios'
-import { mapActions } from 'vuex'
-import AdminPostForm from '@/components/Admin/AdminPostForm'
+import AdminPostForm from '@/components/admin/AdminPostForm'
 
 export default {
   layout: 'admin',
@@ -19,13 +18,7 @@ export default {
   methods: {
     ...mapActions(['addPost']),
     onSubmitted(postData) {
-      axios
-        .post(
-          'https://nuxt-ssr-0-default-rtdb.asia-southeast1.firebasedatabase.app/posts.json',
-          postData
-        )
-        .then(res => console.log(res.data))
-        .catch(e => console.log(e))
+      this.addPost(postData).then(() => this.$router.push('/admin'))
     },
   },
 }
