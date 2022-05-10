@@ -1,6 +1,3 @@
-import axios from 'axios'
-import { POSTS_API } from '../constants/api'
-
 export const state = () => ({
   posts: [],
 })
@@ -35,8 +32,8 @@ export const actions = {
         ...entry[1],
       }))
 
-    return axios
-      .get(`${POSTS_API}.json`)
+    return context.app.$axios
+      .get(`${process.env.postUrl}.json`)
       .then(res =>
         vuexContext.commit(
           'setPosts',
@@ -49,16 +46,16 @@ export const actions = {
     context.commit('setPosts', posts)
   },
   addPost(context, postData) {
-    return axios
-      .post(`${POSTS_API}.json`, postData)
+    return this.$axios
+      .post(`${process.env.postUrl}.json`, postData)
       .then(res =>
         context.commit('addPost', { ...postData, id: res.data.name })
       )
       .catch(e => console.log(e))
   },
   editPost(context, editedPost) {
-    return axios
-      .put(`${POSTS_API}/${editedPost.id}.json`, editedPost)
+    return this.$axios
+      .put(`${process.env.postUrl}/${editedPost.id}.json`, editedPost)
       .then(() =>
         context.commit('editPost', { ...editedPost, id: editedPost.id })
       )

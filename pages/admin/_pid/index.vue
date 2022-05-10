@@ -7,9 +7,7 @@
 </template>
 
 <script>
-import axios from 'axios'
 import { mapGetters, mapActions } from 'vuex'
-import { POSTS_API } from '@/constants/api'
 import AdminPostForm from '@/components/admin/AdminPostForm'
 import { jsonClone } from '@/utils'
 
@@ -29,7 +27,9 @@ export default {
   },
   async fetch() {
     try {
-      const res = await axios.get(`${POSTS_API}/${this.$route.params.pid}.json`)
+      const res = await this.$axios.get(
+        `${process.env.postUrl}/${this.$route.params.pid}.json`
+      )
       this.loadedPost = { ...res.data, updatedDate: new Date().getFullYear() }
     } catch (error) {
       console.log(error)

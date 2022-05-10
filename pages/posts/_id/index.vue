@@ -3,7 +3,9 @@
     <section class="post">
       <h1 class="post-title">{{ post.title }}</h1>
       <div class="post-details">
-        <div class="post-detail">Last updated on {{ post.updatedDate }}</div>
+        <div class="post-detail">
+          Last updated on {{ post.updatedDate | date }}
+        </div>
         <div class="post-detail">Written by {{ post.author }}</div>
       </div>
       <p class="post-content">{{ post.content }}</p>
@@ -20,9 +22,6 @@
 </template>
 
 <script>
-import axios from 'axios'
-import { POSTS_API } from '@/constants/api'
-
 export default {
   data() {
     return {
@@ -37,7 +36,9 @@ export default {
   },
   async fetch() {
     try {
-      const res = await axios.get(`${POSTS_API}/${this.$route.params.id}.json`)
+      const res = await this.$axios.get(
+        `${process.env.postUrl}/${this.$route.params.id}.json`
+      )
       this.post = { ...res.data, updatedDate: new Date().getFullYear() }
     } catch (error) {
       this.$router.push('/error')
